@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliot Winder — Event Producer</title>
+<meta name="description" content="Eliot Winder is an omni style event producer with 20+ years delivering curated experiences across festivals, performing arts, corporate events, and luxury productions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0a0a0a;
+  --deep: #111111;
+  --surface: #1a1a1a;
+  --surface-light: #222222;
+  --amber: #d4a24e;
+  --amber-light: #e8c47a;
+  --amber-dim: #a07a3a;
+  --cream: #f0e6d3;
+  --white: #fafafa;
+  --gray: #888888;
+  --gray-dim: #555555;
+  --text: #cccccc;
+  --text-dim: #999999;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; background: #000000; }
+body {
+  background: #000000;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── GRAIN OVERLAY ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 3px; }
+
+/* ─── NAVIGATION ─── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.4s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1rem 3rem;
+  border-bottom: 1px solid rgba(212,162,78,0.1);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.2em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--amber); }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--amber);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ─── HAMBURGER ─── */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+.hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: all 0.3s; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ─── HERO ─── */
+.hero {
+  height: 85vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 3rem 5rem;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('Lucidity_2017_charlie_winterhalter126.jpg') center/cover no-repeat;
+  filter: brightness(0.3) saturate(0.7);
+  transform: scale(1.05);
+  transition: transform 8s ease-out;
+}
+.hero.loaded .hero-bg { transform: scale(1); }
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--black) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.2) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+.hero-tag {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s 0.5s forwards;
+}
+.hero h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--amber);
+}
+.hero-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 300;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  max-width: 600px;
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hero-scroll span {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  writing-mode: vertical-rl;
+}
+.hero-scroll .line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--amber), transparent);
+  animation: scrollLine 2s infinite;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollLine {
+  0%,100% { opacity: 0.3; transform: scaleY(0.5); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ─── SECTION DEFAULTS ─── */
+section { padding: 5rem 3rem; }
+.section-tag {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.section-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--amber-light);
+}
+
+/* ─── VIDEO REEL SECTION ─── */
+.video-section {
+  padding: 4rem 3rem;
+  background: var(--deep);
+  position: relative;
+}
+.video-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--amber-dim), transparent);
+}
+.video-wrapper {
+  max-width: 1000px;
+  margin: 2rem auto 0;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.video-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 5px;
+  border: 1px solid rgba(212,162,78,0.15);
+  pointer-events: none;
+  z-index: 1;
+}
+.video-wrapper iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  border: none;
+}
+.video-label {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gray);
+}
+
+/* ─── ABOUT / INTRO ─── */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+.about-text p {
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  color: var(--text);
+}
+.about-text p:first-of-type {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--cream);
+}
+.about-image {
+  position: relative;
+}
+.about-image img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 550px;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 2px;
+}
+.about-image::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(212,162,78,0.2);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* ─── STATS BAR ─── */
+.stats {
+  background: var(--surface);
+  padding: 3rem 3rem;
+  border-top: 1px solid rgba(212,162,78,0.08);
+  border-bottom: 1px solid rgba(212,162,78,0.08);
+}
+.stats-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+.stat-item .stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  color: var(--amber);
+  line-height: 1;
+}
+.stat-item .stat-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 0.5rem;
+}
+
+/* ─── EXPERIENCE TIMELINE ─── */
+.experience {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.timeline {
+  margin-top: 2.5rem;
+  position: relative;
+  padding-left: 3rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--amber), var(--amber-dim), transparent);
+}
+.timeline-item {
+  margin-bottom: 2.5rem;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -3rem;
+  top: 0.5rem;
+  width: 7px;
+  height: 7px;
+  background: var(--amber);
+  border-radius: 50%;
+  transform: translateX(-3px);
+}
+.timeline-dates {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-dim);
+  margin-bottom: 0.3rem;
+}
+.timeline-role {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+.timeline-org {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--amber-light);
+  margin-bottom: 0.8rem;
+}
+.timeline-desc {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  max-width: 700px;
+  line-height: 1.8;
+}
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.timeline-tags span {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(212,162,78,0.2);
+  color: var(--amber-dim);
+  border-radius: 2px;
+}
+
+/* ─── PORTFOLIO GALLERY ─── */
+.portfolio {
+  background: #000000;
+}
+.portfolio-header {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+.portfolio-filters {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.portfolio-filters button {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--gray-dim);
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.portfolio-filters button:hover,
+.portfolio-filters button.active {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(212,162,78,0.05);
+}
+.gallery-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: #000000;
+}
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: #000000;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s ease, filter 0.4s;
+  filter: brightness(0.8) saturate(0.8);
+  background: #000000;
+  display: block;
+}
+.gallery-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1) saturate(1);
+}
+.gallery-item .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+.gallery-item:hover .overlay { opacity: 1; }
+.overlay-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.overlay-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-top: 0.2rem;
+}
+
+/* ─── SKILLS / EXPERTISE ─── */
+.expertise {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.expertise-card {
+  background: var(--surface);
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 2px;
+  transition: border-color 0.4s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.expertise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+  transform-origin: left;
+}
+.expertise-card:hover::before { transform: scaleX(1); }
+.expertise-card:hover {
+  border-color: rgba(212,162,78,0.15);
+  transform: translateY(-4px);
+}
+.expertise-icon {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--amber);
+}
+.expertise-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+}
+.expertise-card p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ─── CERTIFICATIONS ─── */
+.certs {
+  background: var(--surface);
+  border-top: 1px solid rgba(212,162,78,0.08);
+}
+.certs-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.certs-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 3rem;
+  margin-top: 2rem;
+}
+.cert-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.cert-item .cert-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--amber);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cert-item span {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* ─── CONTACT ─── */
+.contact {
+  text-align: center;
+  padding: 5rem 3rem;
+  position: relative;
+}
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--amber), transparent);
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.3s;
+}
+.contact-link:hover { color: var(--amber); }
+.contact-link .link-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.contact-link .link-value {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+.resume-btn {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--black);
+  background: var(--amber);
+  padding: 1rem 3rem;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.2s;
+}
+.resume-btn:hover {
+  background: var(--amber-light);
+  transform: translateY(-2px);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer span {
+  font-size: 0.7rem;
+  color: var(--gray-dim);
+  letter-spacing: 0.1em;
+}
+
+/* ─── LIGHTBOX ─── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+.lightbox.active { display: flex; }
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lightbox img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 2px;
+  display: block;
+}
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: var(--white);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+.lightbox-caption {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0,0,0,0.6);
+  padding: 0.5rem 1.5rem;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.lightbox-caption .overlay-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--white);
+}
+.lightbox-caption .overlay-sub {
+  font-size: 0.7rem;
+  color: var(--amber);
+  margin-top: 0.3rem;
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── MOBILE RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  section { padding: 3.5rem 1.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--deep);
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+    transition: right 0.4s ease;
+    border-left: 1px solid rgba(212,162,78,0.1);
+  }
+  .nav-links.open { right: 0; }
+  .hero { padding: 0 1.5rem 3.5rem; }
+  .about { grid-template-columns: 1fr; gap: 2rem; }
+  .about-image { order: -1; }
+  .about-image img { aspect-ratio: 4/3; }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item .overlay { opacity: 1; background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 60%); padding: 1rem; }
+  .overlay-title { font-size: 0.9rem; }
+  .overlay-sub { font-size: 0.6rem; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .certs-list { grid-template-columns: 1fr; }
+  .timeline { padding-left: 2rem; }
+  .hero-scroll { display: none; }
+  .portfolio-filters { gap: 0.5rem; }
+  .portfolio-filters button { padding: 0.4rem 0.8rem; font-size: 0.6rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .contact-links { gap: 2rem; }
+  .video-section { padding: 3rem 1.5rem; }
+  .stats { padding: 2.5rem 1.5rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2.8rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .contact-links { flex-direction: column; align-items: center; }
+  .gallery-grid { gap: 0; }
+  .section-title { font-size: 2rem; }
+  .timeline-role { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">ELIOT <span>WINDER</span></a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#reel" onclick="closeMenu()">Reel</a>
+    <a href="#experience" onclick="closeMenu()">Experience</a>
+    <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+    <a href="#expertise" onclick="closeMenu()">Expertise</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Omni Style Event Producer &bull; Santa Barbara, CA</div>
+    <h1>CREATING<br><em>Unforgettable</em><br>EXPERIENCES</h1>
+    <p class="hero-sub">20+ years producing festivals, performing arts, corporate events, and luxury productions — from 50-person gatherings to 30,000-attendee spectacles.</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding-bottom:1.5rem;">
+  <div class="about">
+    <div class="about-text reveal">
+      <div class="section-tag">The Producer</div>
+      <div class="section-title">EVERY EVENT<br>TELLS A <em>Story</em></div>
+      <p>With roots in the underground festival scene and a career that's evolved through some of the most prestigious stages on the West Coast, I bring a rare combination of technical mastery, creative vision, and operational precision to every production.</p>
+      <p>From co-founding Lucidity Festivals — a 3,500+ attendee immersive arts and music experience — to managing 100+ annual productions at UC Santa Barbara Arts & Lectures alongside world-class artists; My approach has always been the same: relentless attention to detail, deep respect for the craft, and an unwavering commitment to delivering something that moves people.</p>
+      <p>Whether it's a $3M institutional season, a sold-out festival weekend, a luxury wedding at the Belmond El Encanto, or a corporate activation for thousands — I bring the same level of care, the same depth of expertise, and the same drive to exceed expectations.</p>
+    </div>
+    <div class="about-image reveal">
+      <img src="yo-yo_Eliot.jpeg" alt="Eliot Winder backstage with Yo-Yo Ma at UCSB Arts & Lectures">
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number">20+</div>
+      <div class="stat-label">Years in Production</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">Events Produced</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">30K+</div>
+      <div class="stat-label">Largest Attendance</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">$3M+</div>
+      <div class="stat-label">Annual Budget Managed</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Employees Managed</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">2,000+</div>
+      <div class="stat-label">Artists Hosted</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO REEL -->
+<section class="video-section" id="reel">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-tag">Showreel</div>
+    <div class="section-title">SEE THE <em>Work</em></div>
+  </div>
+  <div class="video-wrapper reveal">
+    <iframe src="https://www.youtube.com/embed/1KNW_Fp6C_E?autoplay=1&mute=1&loop=1&playlist=1KNW_Fp6C_E" title="Eliot Winder — Event Producer Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <div class="video-label reveal">A look across 20 years of event production</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="experience">
+    <div class="reveal">
+      <div class="section-tag">Career</div>
+      <div class="section-title">EXPERIENCE &<br><em>Leadership</em></div>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dates">August 2021 — Present</div>
+        <div class="timeline-role">EVENT PRODUCER / PRODUCTION MANAGER</div>
+        <div class="timeline-org">UC Santa Barbara, Arts & Lectures</div>
+        <div class="timeline-desc">Producing 100+ performing arts, film, lecture, and specialty events annually across 11 venues. Supervising 50+ employees, managing a $3M+ production budget, coordinating artist hospitality and technical riders, and overseeing live streaming operations. Securing $100K+ annually in in-kind sponsorships and legacy donations.</div>
+        <div class="timeline-tags">
+          <span>Performing Arts</span>
+          <span>$3M Budget</span>
+          <span>50+ Staff</span>
+          <span>100+ Events/Year</span>
+          <span>Live Streaming</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dates">October 2018 — August 2020</div>
+        <div class="timeline-role">PRODUCTION MANAGER</div>
+        <div class="timeline-org">Spark Creative Events</div>
+        <div class="timeline-desc">End-to-end production lifecycle management for high-aesthetic weddings and corporate events servicing up to 4,000 attendees. Managed 30+ vendor relationships, a fleet of 10 trucks and 5 generators, and a staff of 20+ across all labor, scheduling, budgeting, and payroll.</div>
+        <div class="timeline-tags">
+          <span>Weddings</span>
+          <span>Corporate</span>
+          <span>Vendor Management</span>
+          <span>Fleet Ops</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dates">January 2012 — February 2019</div>
+        <div class="timeline-role">INDEPENDENT CONTRACTOR</div>
+        <div class="timeline-org">Production Services — Festivals & Events</div>
+        <div class="timeline-desc">Delivering turnkey sound, lighting, stage management, and technical direction across dozens of festivals and events ranging from 50 to 30,000 attendees. Clients included Symbiosis, Envision Festival, Enchanted Forest Gathering, Emerald Exchange, and multiple Santa Barbara production companies.</div>
+        <div class="timeline-tags">
+          <span>Sound Engineering</span>
+          <span>Lighting</span>
+          <span>Stage Management</span>
+          <span>Technical Direction</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dates">October 2010 — November 2018</div>
+        <div class="timeline-role">CO-OWNER / EVENT PRODUCER</div>
+        <div class="timeline-org">Lucidity Festivals LLC</div>
+        <div class="timeline-desc">Founding partner of a 3,500+ attendee integrated music and arts festival. Led the Production & Site Operations department, managing a $200K budget across 800 vendors, staff, and artists. Designed 3D topographic site maps, implemented full site infrastructure (power, water, sewage), and consistently sold out in advance.</div>
+        <div class="timeline-tags">
+          <span>Festival Ownership</span>
+          <span>Site Operations</span>
+          <span>Talent Booking</span>
+          <span>Sound Design</span>
+          <span>3D Mapping</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dates">January 2014 — Present</div>
+        <div class="timeline-role">JOURNEYMAN STAGEHAND</div>
+        <div class="timeline-org">IATSE Local 442 Union</div>
+        <div class="timeline-desc">Union-contracted stagehand work across local venues with varying roles in site setup, sound and light management, and event teardown while upholding venue interests and union standards.</div>
+        <div class="timeline-tags">
+          <span>Union / IATSE</span>
+          <span>Stagehand</span>
+          <span>Live Events</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO GALLERY -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header reveal">
+    <div class="section-tag">Portfolio</div>
+    <div class="section-title">WORK IN <em>Focus</em></div>
+    <div class="portfolio-filters">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="festival">Festivals</button>
+      <button data-filter="performing">Performing Arts</button>
+      <button data-filter="corporate">Corporate & Luxury</button>
+      <button data-filter="production">Production & Technical</button>
+    </div>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- PERFORMING ARTS — featured -->
+    <div class="gallery-item" data-category="performing" data-title="Arlington Theatre" data-sub="Concert Production — UCSB A&L" onclick="openLightbox(this)">
+      <img src="IMG_9370_new.jpg" alt="Arlington Theatre concert with dramatic blue lighting" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Arlington Theatre</div><div class="overlay-sub">Concert Production — UCSB A&L</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Lobero Theatre" data-sub="UCSB Arts & Lectures" onclick="openLightbox(this)">
+      <img src="Lobero30.jpg" alt="Lobero Theatre performance" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Lobero Theatre</div><div class="overlay-sub">UCSB Arts & Lectures</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Kenny Loggins" data-sub="Stage Producer" onclick="openLightbox(this)">
+      <img src="Video_Wall_Upstage.jpg" alt="Kenny Loggins with LED video wall" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Kenny Loggins</div><div class="overlay-sub">Stage Producer</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Swan Lake" data-sub="Ballet Preljocaj — UCSB A&L" onclick="openLightbox(this)">
+      <img src="Swan_Lake.jpg" alt="Ballet Preljocaj performing Swan Lake" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Swan Lake</div><div class="overlay-sub">Ballet Preljocaj — UCSB A&L</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="Tent Gala Production" data-sub="Immersive Lighting Design" onclick="openLightbox(this)">
+      <img src="tent_ceiling_JPG.jpg" alt="Tent ceiling with starfield lighting" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Tent Gala Production</div><div class="overlay-sub">Immersive Lighting Design</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Yo-Yo Ma & Kavakos" data-sub="Artist Relations — UCSB A&L" onclick="openLightbox(this)">
+      <img src="Emanuel_Ax__Leonidas_Kavakos__YoYo_Ma_meet__greet_20230127_Herenandez_21.jpg" alt="Backstage with Yo-Yo Ma, Emanuel Ax, and Leonidas Kavakos" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Yo-Yo Ma & Kavakos</div><div class="overlay-sub">Artist Relations — UCSB A&L</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="Belmond El Encanto" data-sub="Luxury Wedding Production" onclick="openLightbox(this)">
+      <img src="belmondelencantowedding02767_Small_j.jpg" alt="Belmond El Encanto wedding" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Belmond El Encanto</div><div class="overlay-sub">Luxury Wedding Production</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Punch Brothers" data-sub="Campbell Hall" onclick="openLightbox(this)">
+      <img src="IMG_5461_new.jpg" alt="Punch Brothers performing at Campbell Hall" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Punch Brothers</div><div class="overlay-sub">Campbell Hall</div></div>
+    </div>
+
+    <!-- FESTIVAL -->
+    <div class="gallery-item" data-category="festival" data-title="Lucidity Festival" data-sub="Co-Owner / Event Producer" onclick="openLightbox(this)">
+      <img src="Lucidity_2017_charlie_winterhalter126.jpg" alt="Lucidity Festival main stage" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Lucidity Festival</div><div class="overlay-sub">Co-Owner / Event Producer</div></div>
+    </div>
+
+    <!-- FESTIVAL -->
+    <div class="gallery-item" data-category="festival" data-title="Enchanted Forest Gathering" data-sub="Sound, Lighting & Stage Mgmt" onclick="openLightbox(this)">
+      <img src="lolstage.jpg" alt="Enchanted Forest Gathering stage" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Enchanted Forest Gathering</div><div class="overlay-sub">Sound, Lighting & Stage Mgmt</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="ISES Holiday Gala" data-sub="Production & Design" onclick="openLightbox(this)">
+      <img src="ISESholiday2015crackediceinside.jpg" alt="ISES holiday event production" loading="lazy">
+      <div class="overlay"><div class="overlay-title">ISES Holiday Gala</div><div class="overlay-sub">Production & Design</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Lecture Series" data-sub="Speaker Programming — UCSB A&L" onclick="openLightbox(this)">
+      <img src="Lectures.jpg" alt="Lecture series featuring David Gergen, Ian Bremmer, Maria Ressa" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Lecture Series</div><div class="overlay-sub">Speaker Programming — UCSB A&L</div></div>
+    </div>
+
+    <!-- FESTIVAL -->
+    <div class="gallery-item" data-category="festival" data-title="Emerald Exchange" data-sub="Production Manager" onclick="openLightbox(this)">
+      <img src="emerald_exchange.jpg" alt="Emerald Exchange festival" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Emerald Exchange</div><div class="overlay-sub">Production Manager</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="Cruz Event" data-sub="Wedding Production" onclick="openLightbox(this)">
+      <img src="Cruz163.jpg" alt="Cruz wedding production" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Cruz Event</div><div class="overlay-sub">Wedding Production</div></div>
+    </div>
+
+    <!-- FESTIVAL -->
+    <div class="gallery-item" data-category="festival" data-title="Le Jardin Secret" data-sub="B2B" onclick="openLightbox(this)">
+      <img src="LeJardinSecret25.jpg" alt="Le Jardin Secret event" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Le Jardin Secret</div><div class="overlay-sub">B2B</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Wynton Marsalis Quintet" data-sub="Jazz — UCSB Arts & Lectures" onclick="openLightbox(this)">
+      <img src="Wynton_Marsalis.jpg" alt="Wynton Marsalis Quintet" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Wynton Marsalis Quintet</div><div class="overlay-sub">Jazz — UCSB Arts & Lectures</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="Laguna Event" data-sub="Corporate Event" onclick="openLightbox(this)">
+      <img src="Laguna_s2.jpg" alt="Laguna corporate event" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Laguna Event</div><div class="overlay-sub">Corporate Event</div></div>
+    </div>
+
+    <!-- PRODUCTION -->
+    <div class="gallery-item" data-category="production" data-title="Stage Design & Thematic" data-sub="Production" onclick="openLightbox(this)">
+      <img src="AF1804171157.jpg" alt="Concert stage with dramatic purple and blue beam lighting" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Stage Design & Thematic</div><div class="overlay-sub">Production</div></div>
+    </div>
+
+    <!-- FESTIVAL -->
+    <div class="gallery-item" data-category="festival" data-title="Lucidity Festival" data-sub="Fire Performance Stage" onclick="openLightbox(this)">
+      <img src="LF2017LouisFisher4664.jpg" alt="Fire performance at Lucidity" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Lucidity Festival</div><div class="overlay-sub">Fire Performance Stage</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Yuja Wang" data-sub="Mahler Chamber Orchestra" onclick="openLightbox(this)">
+      <img src="Yuja_Wang.jpg" alt="Yuja Wang performing with Mahler Chamber Orchestra" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Yuja Wang</div><div class="overlay-sub">Mahler Chamber Orchestra</div></div>
+    </div>
+
+    <!-- PRODUCTION -->
+    <div class="gallery-item" data-category="production" data-title="Sound Engineering" data-sub="FOH & Monitor Systems" onclick="openLightbox(this)">
+      <img src="Lucidity_Fish4517.jpg" alt="Sound engineering setup" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Sound Engineering</div><div class="overlay-sub">FOH & Monitor Systems</div></div>
+    </div>
+
+    <!-- PRODUCTION -->
+    <div class="gallery-item" data-category="production" data-title="Star Star Road House" data-sub="Black Rock City" onclick="openLightbox(this)">
+      <img src="starstar3.jpg" alt="Star Star Road House at Black Rock City" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Star Star Road House</div><div class="overlay-sub">Black Rock City</div></div>
+    </div>
+
+    <!-- PERFORMING ARTS -->
+    <div class="gallery-item" data-category="performing" data-title="Víkingur Ólafsson" data-sub="Piano — UCSB Arts & Lectures" onclick="openLightbox(this)">
+      <img src="Vikingur_Olafsson.jpg" alt="Víkingur Ólafsson at the piano" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Víkingur Ólafsson</div><div class="overlay-sub">Piano — UCSB Arts & Lectures</div></div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="gallery-item" data-category="corporate" data-title="Winery Dinner" data-sub="Private Event Production" onclick="openLightbox(this)">
+      <img src="sweetmondayphotography.jpg" alt="Winery dinner private event" loading="lazy">
+      <div class="overlay"><div class="overlay-title">Winery Dinner</div><div class="overlay-sub">Private Event Production</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="expertise">
+    <div class="reveal">
+      <div class="section-tag">Capabilities</div>
+      <div class="section-title">AREAS OF <em>Expertise</em></div>
+    </div>
+    <div class="expertise-grid">
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#9899;</div>
+        <h3>END-TO-END PRODUCTION</h3>
+        <p>Complete event lifecycle management from concept through execution and post-event wrap. Budgets ranging from $50K to $3M+ with simultaneous multi-event oversight across complex calendars.</p>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#9898;</div>
+        <h3>TECHNICAL DIRECTION</h3>
+        <p>Deep expertise in sound engineering (FOH & monitors), lighting design, LED video walls, live streaming, power distribution, and stage management across every scale of venue.</p>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#9670;</div>
+        <h3>SITE OPERATIONS</h3>
+        <p>Large-scale site design and infrastructure including 3D topographic mapping, power/water/sewage systems, fleet management, permitting, and safety compliance.</p>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#9733;</div>
+        <h3>TALENT & ARTIST RELATIONS</h3>
+        <p>Technical and hospitality rider negotiation, artist management coordination, talent acquisition strategy, backstage hospitality, and VIP experience design for world-class performers.</p>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#9672;</div>
+        <h3>VENDOR & BUDGET MANAGEMENT</h3>
+        <p>Managing 30+ vendor relationships via RFQ/RFI processes, contract negotiation, sponsor solicitation, and rigorous financial reporting across annual production seasons.</p>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon">&#10023;</div>
+        <h3>TEAM LEADERSHIP</h3>
+        <p>Supervising teams of 50+ across production, front-of-house, security, hospitality, and volunteer departments. Experienced in union environments (IATSE) and collective bargaining agreements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs">
+  <div class="certs-inner reveal">
+    <div class="section-tag">Credentials</div>
+    <div class="section-title">CERTIFICATIONS & <em>Skills</em></div>
+    <div class="certs-list">
+      <div class="cert-item"><div class="cert-dot"></div><span>DANTE Network Certified</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>OSHA 10 Certified</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>Fork Lift / VR Certified</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>Aerial Work Platform (Boom Lift) Certified</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>IATSE Local 442 — Journeyman Stagehand</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>Proficient with Salesforce & CRM Platforms</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>FLEX Inventory Management System</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>SketchUp & AutoCAD Experience</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>Industry Standard Sound & Lighting Consoles</span></div>
+      <div class="cert-item"><div class="cert-dot"></div><span>Tessitura & AXS Ticketing Systems</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="reveal">
+    <div class="section-tag">Get in Touch</div>
+    <div class="section-title">LET'S CREATE<br>SOMETHING <em>Remarkable</em></div>
+    <div class="contact-links">
+      <a id="email-link" href="#" class="contact-link" onclick="return false;">
+        <div class="link-label">Email</div>
+        <div class="link-value" id="email-display">Loading...</div>
+      </a>
+      <a href="https://www.linkedin.com/in/eliot-winder/" target="_blank" rel="noopener" class="contact-link">
+        <div class="link-label">LinkedIn</div>
+        <div class="link-value">linkedin.com/in/eliot-winder</div>
+      </a>
+      <a id="phone-link" href="#" class="contact-link" onclick="return false;">
+        <div class="link-label">Phone</div>
+        <div class="link-value" id="phone-display">Loading...</div>
+      </a>
+      <div class="contact-link">
+        <div class="link-label">Location</div>
+        <div class="link-value">Santa Barbara, California</div>
+      </div>
+    </div>
+    <a href="Eliot_Winder_Resume_Event_Producer_2026.pdf" download class="resume-btn">Download Resume</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 Eliot Winder. All rights reserved.</span>
+  <span>Omni Style Event Producer &bull; Santa Barbara, CA</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close">&times;</div>
+  <div class="lightbox-content">
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption">
+      <div class="overlay-title" id="lightboxTitle"></div>
+      <div class="overlay-sub" id="lightboxSub"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Nav scroll behavior
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Hero loaded animation
+window.addEventListener('load', () => {
+  document.querySelector('.hero').classList.add('loaded');
+});
+
+// Mobile menu
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('active');
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('active');
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal, .timeline-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Portfolio filters
+const filterBtns = document.querySelectorAll('.portfolio-filters button');
+const galleryItems = document.querySelectorAll('.gallery-item');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    galleryItems.forEach(item => {
+      if (filter === 'all' || item.dataset.category === filter) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Lightbox
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightboxTitle').textContent = el.dataset.title;
+  document.getElementById('lightboxSub').textContent = el.dataset.sub;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// Smooth anchor scrolling
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+<script>
+// Contact info assembled by JS — not in HTML source for crawler protection
+(function(){
+  var p1='805',p2='729',p3='7902';
+  var ph=p1+'-'+p2+'-'+p3;
+  var e1='Winder',e2='Eliot',e3='Gmail',e4='com';
+  var em=e1+'.'+e2+'@'+e3+'.'+e4;
+  var pl=document.getElementById('phone-link');
+  var pd=document.getElementById('phone-display');
+  var el=document.getElementById('email-link');
+  var ed=document.getElementById('email-display');
+  if(pd)pd.textContent=ph;
+  if(pl){pl.href='te'+'l:'+p1+p2+p3;pl.onclick=null;}
+  if(ed)ed.textContent=em;
+  if(el){el.href='mai'+'lto:'+em;el.onclick=null;}
+})();
+</script>
+
+</body>
+</html>

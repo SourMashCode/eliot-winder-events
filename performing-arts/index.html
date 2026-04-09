@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliot Winder — Production Manager, Performing Arts</title>
+<meta name="description" content="Eliot Winder is a Production Manager at UCSB Arts & Lectures, managing 100+ performing arts events annually across Santa Barbara's most prestigious venues.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--white:#fff;--offwhite:#fafafa;--warm-gray:#f5f4f2;--border:#e8e6e3;--border-light:#f0eeec;--text:#1a1a1a;--text-mid:#444;--text-light:#666;--text-dim:#999;--navy:#1a2744;--navy-light:#2a3d5e;--navy-soft:#384b6a;--serif:'Playfair Display',Georgia,serif;--sans:'Source Sans 3','Helvetica Neue',Arial,sans-serif}
+html{scroll-behavior:smooth;background:var(--white)}
+body{background:var(--white);color:var(--text);font-family:var(--sans);font-weight:300;font-size:18px;line-height:1.8;-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-light);padding:1rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.nav-name{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--navy);text-decoration:none}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{font-size:0.82rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--navy)}
+
+.hero{position:relative;height:55vh;min-height:420px;display:flex;align-items:flex-end;padding:0 4rem 3.5rem;overflow:hidden;margin-top:52px}
+.hero-bg{position:absolute;inset:0;background:url('gallery_IMG_9370.jpg') center 40%/cover no-repeat;filter:brightness(0.21)}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.4) 60%,rgba(0,0,0,0.35) 100%)}
+.hero-content{position:relative;z-index:2;max-width:700px}
+.hero-tag{font-size:0.75rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:0.8rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:400;line-height:1.3;color:white}
+.hero h1 em{font-style:italic}
+.hero-sub{font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.75);margin-top:0.8rem;max-width:550px;line-height:1.8}
+
+section{padding:4rem 4rem}
+.section-tag{font-size:0.75rem;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:var(--navy);margin-bottom:0.5rem}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:400;color:var(--text);line-height:1.2}
+
+.about-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.8fr;gap:3rem;align-items:center}
+.about-text p{font-size:1.05rem;color:var(--text-mid);margin-top:0.8rem;line-height:1.9}
+.about-image img{width:100%;aspect-ratio:3/4;max-height:420px;object-fit:cover;object-position:center 35%}
+
+.stats{background:var(--warm-gray);padding:2.5rem 4rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:2rem;text-align:center}
+.stat-num{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:600;color:var(--navy)}
+.stat-label{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-light);margin-top:0.3rem}
+
+.video-section{background:var(--white)}
+.video-inner{max-width:800px;margin:0 auto;text-align:center}
+.video-wrapper{margin-top:1.2rem;overflow:hidden;border-radius:3px;box-shadow:0 2px 20px rgba(0,0,0,0.06)}
+.video-wrapper iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+
+.exp-inner{max-width:1000px;margin:0 auto}
+.timeline-item{padding:1.5rem 0;border-bottom:1px solid var(--border-light)}
+.timeline-item:last-child{border-bottom:none}
+.timeline-dates{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--navy-soft)}
+.timeline-role{font-family:var(--serif);font-size:1.35rem;color:var(--text);margin-top:0.15rem}
+.timeline-org{font-size:1rem;color:var(--text-light);font-style:italic;margin-bottom:0.4rem}
+.timeline-desc{font-size:1rem;color:var(--text-mid);max-width:650px;line-height:1.8}
+
+.gallery-section{background:var(--white);padding:4rem 4rem 4.5rem;border-top:1px solid var(--border)}
+.gallery-inner{max-width:1060px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:1.8rem}
+.gallery-item{position:relative;overflow:hidden;cursor:pointer;background:var(--white);border-radius:2px;box-shadow:0 1px 8px rgba(0,0,0,0.08);transition:box-shadow 0.3s,transform 0.3s}
+.gallery-item:hover{box-shadow:0 4px 20px rgba(0,0,0,0.15);transform:translateY(-2px)}
+.gallery-item img{width:100%;height:auto;display:block;transition:filter 0.3s}
+.gallery-item:hover img{filter:brightness(1.03)}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;padding:0.7rem 0.8rem;background:linear-gradient(transparent,rgba(0,0,0,0.55));opacity:0;transition:opacity 0.3s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.g-title{font-size:0.82rem;color:white;font-weight:500;letter-spacing:0.04em}
+.g-sub{font-size:0.68rem;color:rgba(255,255,255,0.8);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.08rem}
+
+.lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lightbox.active{display:flex}
+.lightbox-content{position:relative;display:flex;flex-direction:column;align-items:center}
+.lightbox-content img{max-width:90vw;max-height:82vh;width:auto;height:auto;object-fit:contain;display:block;border-radius:2px}
+.lightbox-close{position:fixed;top:1.5rem;right:1.5rem;font-size:1.8rem;color:white;cursor:pointer;font-family:var(--sans);z-index:1001;opacity:0.7;transition:opacity 0.3s}
+.lightbox-close:hover{opacity:1}
+.lightbox-caption{margin-top:1rem;text-align:center}
+.lightbox-caption .lt{font-family:var(--serif);font-size:1.3rem;color:white}
+.lightbox-caption .ls{font-size:0.75rem;color:rgba(255,255,255,0.55);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.2rem}
+
+.contact{text-align:center;border-top:1px solid var(--border)}
+.contact-inner{max-width:700px;margin:0 auto}
+.contact-grid{display:flex;justify-content:center;gap:3rem;margin-top:1.2rem;flex-wrap:wrap}
+.contact-item .label{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim)}
+.contact-item .value{font-family:var(--serif);font-size:1.1rem;color:var(--navy);margin-top:0.15rem}
+.contact-item a{color:var(--navy);text-decoration:none}
+.resume-btn{display:inline-block;margin-top:1.8rem;font-size:0.82rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:0.85rem 2.5rem;text-decoration:none;transition:background 0.3s;border-radius:2px}
+.resume-btn:hover{background:var(--navy-light)}
+
+footer{padding:1.5rem 4rem;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-dim)}
+
+@media(max-width:1024px){nav{padding:0.8rem 2rem}section{padding:3rem 2rem}.gallery-grid{grid-template-columns:repeat(4,1fr)}.gallery-section{padding:3rem 2rem}.stats{padding:2.2rem 2rem}}
+@media(max-width:768px){body{font-size:16px}section{padding:2.5rem 1.5rem}nav{padding:0.7rem 1.5rem}.nav-links{display:none}.about-inner{grid-template-columns:1fr}.about-image{order:-1}.about-image img{max-height:300px;aspect-ratio:4/3}.stats{padding:2rem 1.5rem}.stats-grid{grid-template-columns:repeat(3,1fr)}.gallery-grid{grid-template-columns:repeat(2,1fr);gap:8px}.gallery-overlay{opacity:1;background:linear-gradient(transparent,rgba(0,0,0,0.5))}.hero{height:50vh;min-height:350px;padding:0 1.5rem 2rem}footer{flex-direction:column;gap:0.3rem;text-align:center;padding:1.2rem 1.5rem}.contact-grid{flex-direction:column;align-items:center}.gallery-section{padding:2.5rem 1.5rem}}
+@media(max-width:480px){.hero h1{font-size:1.6rem}.hero-sub{font-size:0.95rem}.stats-grid{gap:1rem}.stat-num{font-size:1.5rem}.gallery-grid{gap:6px}}
+@media(min-width:2560px){body{font-size:22px}.about-inner{max-width:1200px}.gallery-inner{max-width:1400px}.gallery-grid{gap:18px}.exp-inner{max-width:1200px}.video-inner{max-width:950px}.stats-grid{max-width:1200px}.contact-inner{max-width:800px}nav{padding:1.2rem 6rem}.nav-name{font-size:1.5rem}.nav-links a{font-size:0.92rem;gap:3rem}section{padding:5rem 6rem}.gallery-section{padding:5rem 6rem}.stats{padding:3rem 6rem}.hero{min-height:500px;padding:0 6rem 4rem}.hero h1{font-size:3.5rem}.hero-sub{font-size:1.3rem;max-width:650px}.section-title{font-size:3rem}.section-tag{font-size:0.88rem}.about-text p{font-size:1.2rem}.timeline-role{font-size:1.6rem}.timeline-org{font-size:1.15rem}.timeline-desc{font-size:1.15rem;max-width:750px}.timeline-dates{font-size:0.88rem}.stat-num{font-size:3rem}.stat-label{font-size:0.88rem}.g-title{font-size:0.95rem}.g-sub{font-size:0.78rem}.contact-item .value{font-size:1.3rem}.contact-item .label{font-size:0.82rem}.resume-btn{font-size:0.95rem;padding:1rem 3rem}.lightbox-caption .lt{font-size:1.6rem}.lightbox-caption .ls{font-size:0.88rem}footer{padding:1.8rem 6rem;font-size:0.88rem}}
+</style>
+</head>
+<body>
+<nav><a href="#" class="nav-name">Eliot Winder</a><div class="nav-links"><a href="#about">About</a><a href="#reel">Reel</a><a href="#experience">Experience</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a></div></nav>
+
+<section class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="hero-tag">Production Manager &bull; UCSB Arts & Lectures</div><h1>Producing world-class <em>performing arts</em> experiences</h1><p class="hero-sub">Managing 100+ events annually across Santa Barbara's most prestigious venues — from classical concerts and ballet to lectures by Nobel laureates.</p></div></section>
+
+<section id="about"><div class="about-inner"><div class="about-text"><div class="section-tag">About</div><div class="section-title">The Producer Behind the Curtain</div><p>As Production Manager for UC Santa Barbara Arts & Lectures — the largest performing arts presenter between Los Angeles and San Francisco — I oversee every dimension of production for one of the most ambitious cultural seasons on the West Coast.</p><p>From negotiating artist riders with world-renowned musicians to managing a $3M+ annual production budget across 11 venues, I bring institutional rigor, technical depth, and a genuine passion for the arts to every event.</p></div><div class="about-image"><img src="yo-yo_Eliot.jpg" alt="Eliot Winder backstage with Yo-Yo Ma at UCSB Arts & Lectures"></div></div></section>
+
+<section class="stats"><div class="stats-grid"><div><div class="stat-num">100+</div><div class="stat-label">Events per year</div></div><div><div class="stat-num">$3M+</div><div class="stat-label">Annual budget</div></div><div><div class="stat-num">50+</div><div class="stat-label">Staff supervised</div></div><div><div class="stat-num">11</div><div class="stat-label">Venues managed</div></div><div><div class="stat-num">2,000+</div><div class="stat-label">Artists Hosted</div></div><div><div class="stat-num">20+</div><div class="stat-label">Years in Production</div></div></div></section>
+
+<section class="video-section" id="reel"><div class="video-inner"><div class="section-tag">Showreel</div><div class="section-title">See the Work</div><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Kt_DEoVSX3c" title="Performing Arts Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div></section>
+
+<section id="experience"><div class="exp-inner"><div class="section-tag">Experience</div><div class="section-title">Career</div><div class="timeline" style="margin-top:1.2rem"><div class="timeline-item"><div class="timeline-dates">August 2021 — Present</div><div class="timeline-role">Event Producer / Production Manager</div><div class="timeline-org">UC Santa Barbara, Arts & Lectures</div><div class="timeline-desc">Producing 100+ performing arts, film, lecture, and specialty events annually across 11 venues. Supervising 50+ employees, managing a $3M+ production budget, and overseeing live streaming operations.</div></div><div class="timeline-item"><div class="timeline-dates">January 2014 — Present</div><div class="timeline-role">Journeyman Stagehand</div><div class="timeline-org">IATSE Local 442 Union</div><div class="timeline-desc">Union-contracted stagehand work across local venues with varying roles in site setup, sound and light management, and event teardown.</div></div><div class="timeline-item"><div class="timeline-dates">October 2018 — August 2020</div><div class="timeline-role">Production Manager</div><div class="timeline-org">Spark Creative Events</div><div class="timeline-desc">End-to-end production for high-aesthetic weddings and corporate events servicing up to 4,000 attendees. Managed 30+ vendor relationships and a staff of 20+.</div></div></div></div></section>
+
+<section class="gallery-section" id="portfolio"><div class="gallery-inner"><div class="section-tag">Portfolio</div><div class="section-title">Productions & Venues</div><div class="gallery-grid">
+<div class="gallery-item" onclick="openLightbox(this)" data-title="London Symphony Orchestra" data-sub="Granada Theatre"><img src="gallery_IMG_9406.jpg" alt="London Symphony Orchestra at Granada Theatre"><div class="gallery-overlay"><div class="g-title">London Symphony Orchestra</div><div class="g-sub">Granada Theatre</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Concert Production" data-sub="Campbell Hall"><img src="gallery_IMG_8148.jpg" alt="Concert Production at Campbell Hall"><div class="gallery-overlay"><div class="g-title">Concert Production</div><div class="g-sub">Campbell Hall</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="The Warren Treaty" data-sub="Arlington Theatre"><img src="gallery_IMG_9370.jpg" alt="The Warren Treaty at Arlington Theatre"><div class="gallery-overlay"><div class="g-title">The Warren Treaty</div><div class="g-sub">Arlington Theatre</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Lobero Theatre" data-sub=""><img src="gallery_Lobero30.jpg" alt="Lobero Theatre"><div class="gallery-overlay"><div class="g-title">Lobero Theatre</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Lang Lang" data-sub="Granada Theatre"><img src="gallery_IMG_6654.jpg" alt="Lang Lang at Granada Theatre"><div class="gallery-overlay"><div class="g-title">Lang Lang</div><div class="g-sub">Granada Theatre</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Ballet Preljocaj" data-sub="Swan Lake"><img src="gallery_Swan_Lake.jpg" alt="Ballet Preljocaj Swan Lake"><div class="gallery-overlay"><div class="g-title">Ballet Preljocaj</div><div class="g-sub">Swan Lake</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Sierra Ferrell" data-sub="Campbell Hall"><img src="gallery_IMG_8161.jpg" alt="Sierra Ferrell at Campbell Hall"><div class="gallery-overlay"><div class="g-title">Sierra Ferrell</div><div class="g-sub">Campbell Hall</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Wynton Marsalis" data-sub="Quintet"><img src="gallery_Wynton_Marsalis.jpg" alt="Wynton Marsalis Quintet"><div class="gallery-overlay"><div class="g-title">Wynton Marsalis</div><div class="g-sub">Quintet</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Gala Production" data-sub="Immersive Lighting"><img src="gallery_tent_ceiling_JPG.jpg" alt="Gala Production Immersive Lighting"><div class="gallery-overlay"><div class="g-title">Gala Production</div><div class="g-sub">Immersive Lighting</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Summer Cinema Series" data-sub="SB Courthouse"><img src="gallery_IMG_9126.jpg" alt="Summer Cinema Series SB Courthouse"><div class="gallery-overlay"><div class="g-title">Summer Cinema Series</div><div class="g-sub">SB Courthouse</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Yuja Wang" data-sub="Mahler Chamber Orchestra"><img src="gallery_Yuja_Wang.jpg" alt="Yuja Wang Mahler Chamber Orchestra"><div class="gallery-overlay"><div class="g-title">Yuja Wang</div><div class="g-sub">Mahler Chamber Orchestra</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Star Star Roadhouse" data-sub="Black Rock City"><img src="gallery_starstar3.jpg" alt="Star Star Roadhouse Black Rock City"><div class="gallery-overlay"><div class="g-title">Star Star Roadhouse</div><div class="g-sub">Black Rock City</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Kenny Loggins" data-sub="Benefit Concert"><img src="gallery_Video_Wall_Upstage.jpg" alt="Kenny Loggins Benefit Concert"><div class="gallery-overlay"><div class="g-title">Kenny Loggins</div><div class="g-sub">Benefit Concert</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Artist Performance" data-sub="Campbell Hall"><img src="gallery_IMG_8159.jpg" alt="Artist Performance Campbell Hall"><div class="gallery-overlay"><div class="g-title">Artist Performance</div><div class="g-sub">Campbell Hall</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Lecture Series" data-sub="Notable Speakers"><img src="gallery_Lectures.jpg" alt="Lecture Series Notable Speakers"><div class="gallery-overlay"><div class="g-title">Lecture Series</div><div class="g-sub">Notable Speakers</div></div></div>
+<div class="gallery-item" onclick="openLightbox(this)" data-title="Mavis Staples" data-sub="Arlington Theatre FOH"><img src="gallery_IMG_9368.jpg" alt="Mavis Staples Arlington Theatre"><div class="gallery-overlay"><div class="g-title">Mavis Staples</div><div class="g-sub">Arlington Theatre FOH</div></div></div>
+</div></div></section>
+
+<section id="contact" class="contact"><div class="contact-inner"><div class="section-tag">Contact</div><div class="section-title">Get in Touch</div><div class="contact-grid"><div class="contact-item"><div class="label">Email</div><div class="value"><a id="email-link" href="#">&nbsp;</a></div></div><div class="contact-item"><div class="label">LinkedIn</div><div class="value"><a href="https://www.linkedin.com/in/eliot-winder/" target="_blank">linkedin.com/in/eliot-winder</a></div></div><div class="contact-item"><div class="label">Phone</div><div class="value"><a id="phone-link" href="#">&nbsp;</a></div></div></div><a href="Eliot_Winder_Resume_2026.pdf" download class="resume-btn">Download Resume</a></div></section>
+
+<footer><span>&copy; 2026 Eliot Winder</span><span>Production Manager &bull; Performing Arts</span></footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><div class="lightbox-close">&times;</div><div class="lightbox-content" onclick="event.stopPropagation()"><img id="lbImg" src="" alt=""><div class="lightbox-caption"><div class="lt" id="lbTitle"></div><div class="ls" id="lbSub"></div></div></div></div>
+
+<script>
+function openLightbox(el){document.getElementById('lbImg').src=el.querySelector('img').src;document.getElementById('lbTitle').textContent=el.dataset.title;document.getElementById('lbSub').textContent=el.dataset.sub;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden'}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+// Contact info assembled by JS — not in HTML source for crawler protection
+(function(){
+  var p1='805',p2='729',p3='7902';
+  var ph=p1+'-'+p2+'-'+p3;
+  var e1='Winder',e2='Eliot',e3='Gmail',e4='com';
+  var em=e1+'.'+e2+'@'+e3+'.'+e4;
+  var pl=document.getElementById('phone-link');
+  var el=document.getElementById('email-link');
+  if(pl){pl.href='te'+'l:'+p1+p2+p3;pl.textContent=ph;}
+  if(el){el.href='mai'+'lto:'+em;el.textContent=em;}
+})();
+</script>
+</body>
+</html>

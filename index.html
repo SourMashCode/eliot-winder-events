@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliot Winder — Event Producer & Production Manager</title>
+<meta name="description" content="Eliot Winder is an event producer and production manager with 20+ years of experience spanning festivals, performing arts, corporate events, and luxury productions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#0a0a0a}
+body{font-family:'Source Sans 3','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased}
+
+.landing{display:flex;height:100vh;width:100%}
+
+/* HEADER — uses flex to split name across the divider */
+.name-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.8rem 0 1.2rem;background:linear-gradient(to bottom,rgba(0,0,0,0.6) 0%,transparent 100%);pointer-events:none;display:flex;flex-direction:column;align-items:center}
+.name-row{display:flex;width:100%;justify-content:center}
+.name-row .first{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);color:white;letter-spacing:0.15em;text-align:right;width:50%;padding-right:0.35em;text-shadow:0 2px 15px rgba(0,0,0,0.5)}
+.name-row .last{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);color:white;letter-spacing:0.15em;text-align:left;width:50%;padding-left:0.35em;text-shadow:0 2px 15px rgba(0,0,0,0.5)}
+.tag-row{display:flex;width:100%;justify-content:center;margin-top:0.15rem}
+.tag-row .tag-l{font-family:'Source Sans 3',sans-serif;font-size:clamp(0.65rem,1.1vw,0.8rem);font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-align:right;width:50%;padding-right:0.5em;text-shadow:0 1px 8px rgba(0,0,0,0.4)}
+.tag-row .tag-r{font-family:'Source Sans 3',sans-serif;font-size:clamp(0.65rem,1.1vw,0.8rem);font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-align:left;width:50%;padding-left:0.5em;text-shadow:0 1px 8px rgba(0,0,0,0.4)}
+
+/* PANELS */
+.panel{position:relative;flex:1;overflow:hidden;cursor:pointer;display:flex;align-items:flex-end;transition:flex 0.6s cubic-bezier(0.25,0.8,0.25,1);text-decoration:none}
+.panel:hover{flex:1.15}
+.panel-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 0.6s cubic-bezier(0.25,0.8,0.25,1),filter 0.6s}
+.panel:hover .panel-bg{transform:scale(1.03)}
+
+.panel-left .panel-bg{background-image:url('events/Lucidity_2017_charlie_winterhalter126.jpg');filter:brightness(0.3)}
+.panel-left:hover .panel-bg{filter:brightness(0.4)}
+.panel-left::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 50%,transparent 100%)}
+.panel-left .panel-content::before{content:'';display:block;width:40px;height:2px;background:#d4a24e;margin-bottom:1rem}
+
+.panel-right .panel-bg{background-image:url('performing-arts/gallery_IMG_9406.jpg');filter:brightness(0.35)}
+.panel-right:hover .panel-bg{filter:brightness(0.45)}
+.panel-right::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.85) 0%,rgba(26,39,68,0.2) 50%,transparent 100%)}
+.panel-right .panel-content::before{content:'';display:block;width:40px;height:2px;background:rgba(255,255,255,0.6);margin-bottom:1rem}
+
+/* DIVIDER */
+.divider{position:absolute;left:50%;top:0;bottom:0;width:1px;z-index:50;background:rgba(255,255,255,0.15)}
+
+/* PANEL CONTENT */
+.panel-content{position:relative;z-index:10;padding:0 3rem 3.5rem;max-width:500px}
+.panel-label{font-size:clamp(0.6rem,1vw,0.72rem);font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:0.5rem}
+.panel-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:400;color:white;line-height:1.2;margin-bottom:0.6rem}
+.panel-title em{font-style:italic}
+.panel-desc{font-size:clamp(0.82rem,1.1vw,0.95rem);font-weight:300;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.5rem;max-width:380px}
+.panel-btn{display:inline-block;font-size:0.72rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:white;text-decoration:none;padding:0.7rem 2rem;border:1px solid rgba(255,255,255,0.4);transition:all 0.3s}
+.panel-left .panel-btn:hover{background:#d4a24e;border-color:#d4a24e;color:#0a0a0a}
+.panel-right .panel-btn:hover{background:white;border-color:white;color:#1a2744}
+
+/* FOOTER — also split so divider falls between words */
+.landing-footer{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0.8rem;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 100%);pointer-events:none}
+.footer-l{font-size:0.58rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;width:50%;text-align:right;padding-right:0.5em}
+.footer-r{font-size:0.58rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;width:50%;text-align:left;padding-left:0.5em}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.panel-content{padding:0 2rem 3rem}.panel-title{font-size:clamp(1.4rem,2.5vw,2rem)}}
+@media(max-width:768px){html,body{overflow:auto}.landing{flex-direction:column;height:auto}.panel{min-height:50vh;flex:none}.panel:hover{flex:none}.divider{display:none}.name-header{padding:1.5rem 1.5rem 1rem}.name-row .first,.name-row .last{width:auto;text-align:center;padding:0}.name-row .first{padding-right:0.2em}.name-row .last{padding-left:0.2em}.tag-row .tag-l,.tag-row .tag-r{width:auto;text-align:center;padding:0}.tag-row .tag-l{padding-right:0.2em}.tag-row .tag-r{padding-left:0.2em}.footer-l,.footer-r{width:auto;text-align:center;padding:0}.footer-l{padding-right:0.2em}.footer-r{padding-left:0.2em}.panel-content{padding:0 1.5rem 2.5rem}.landing-footer{position:relative;background:rgba(0,0,0,0.9);padding:1.2rem}}
+@media(max-width:480px){.panel{min-height:50vh}.panel-title{font-size:1.4rem}.panel-desc{font-size:0.82rem}.name-row .first,.name-row .last{font-size:1.5rem}}
+@media(min-width:2560px){.name-row .first,.name-row .last{font-size:3rem;padding-right:0.4em;padding-left:0.4em}.tag-row .tag-l,.tag-row .tag-r{font-size:1rem}.panel-content{padding:0 5rem 5rem;max-width:650px}.panel-title{font-size:3rem}.panel-desc{font-size:1.15rem;max-width:480px}.panel-btn{font-size:0.88rem;padding:0.9rem 2.5rem}.panel-label{font-size:0.85rem}.footer-l,.footer-r{font-size:0.72rem}}
+</style>
+</head>
+<body>
+<div class="name-header">
+  <div class="name-row"><span class="first">ELIOT</span><span class="last">WINDER</span></div>
+  <div class="tag-row"><span class="tag-l">Event Producer</span><span class="tag-r">Production Manager</span></div>
+</div>
+<div class="landing">
+<a href="events/" class="panel panel-left"><div class="panel-bg"></div><div class="panel-content"><div class="panel-label">Full-Spectrum Portfolio</div><div class="panel-title">Omni Style <em>Event Producer</em></div><div class="panel-desc">Festivals, corporate galas, luxury weddings, immersive experiences, and large-scale productions spanning 20+ years.</div><span class="panel-btn">View Portfolio</span></div></a>
+<div class="divider"></div>
+<a href="performing-arts/" class="panel panel-right"><div class="panel-bg"></div><div class="panel-content"><div class="panel-label">Institutional Portfolio</div><div class="panel-title">Performing Arts & <em>Institutional</em></div><div class="panel-desc">Classical concerts, ballet, lectures, and world-class cultural programming at UCSB Arts & Lectures and Santa Barbara's premier venues.</div><span class="panel-btn">View Portfolio</span></div></a>
+</div>
+<div class="landing-footer"><span class="footer-l">&copy; 2026</span><span class="footer-r">Eliot Winder</span></div>
+</body>
+</html>

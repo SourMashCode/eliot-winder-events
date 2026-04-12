@@ -264,21 +264,16 @@ section { padding: 5rem 3rem; }
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-.video-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 5px;
-  border: 1px solid rgba(212,162,78,0.15);
-  pointer-events: none;
-  z-index: 1;
+  isolation: isolate;
+  z-index: 2;
 }
 .video-wrapper iframe {
   width: 100%;
   aspect-ratio: 16/9;
   display: block;
   border: none;
+  position: relative;
+  z-index: 3;
 }
 .video-label {
   text-align: center;

@@ -121,7 +121,10 @@ section{padding:4rem 4rem}
 .resume-btn:hover{background:var(--cream-bright);color:var(--bg-dark)}
 
 /* FOOTER */
-footer{padding:1.5rem 4rem;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-dim);background:var(--bg-dark)}
+footer{padding:1.5rem 4rem;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;color:var(--text-dim);background:var(--bg-dark)}
+/* WinderForge credit / cross-link. */
+.wf-credit{display:inline-flex;align-items:center;gap:0.5em;font-size:0.72rem;color:var(--text-dim);text-decoration:none;transition:color 0.3s}
+.wf-credit:hover{color:#C4922D}
 
 /* RESPONSIVE: TABLET */
 @media(max-width:1024px){nav{padding:0.8rem 2rem}section{padding:3rem 2rem}.gallery-grid{grid-template-columns:repeat(4,1fr)}.gallery-section{padding:3rem 2rem}.stats{padding:2.2rem 2rem}}
@@ -174,7 +177,14 @@ footer{padding:1.5rem 4rem;border-top:1px solid var(--border-light);display:flex
 
 <section id="contact" class="contact"><div class="contact-inner"><div class="section-tag">Contact</div><div class="section-title">Get in Touch</div><div class="contact-grid"><div class="contact-item"><div class="label">Email</div><div class="value"><a id="email-link" href="#">&nbsp;</a></div></div><div class="contact-item"><div class="label">LinkedIn</div><div class="value"><a href="https://www.linkedin.com/in/eliot-winder/" target="_blank">linkedin.com/in/eliot-winder</a></div></div><div class="contact-item"><div class="label">Phone</div><div class="value"><a id="phone-link" href="#">&nbsp;</a></div></div></div><a href="Eliot_Winder_Resume_2026.pdf" download class="resume-btn">Download Resume</a></div></section>
 
-<footer><span>&copy; 2026 Eliot Winder</span><span>Production Manager &bull; Performing Arts</span></footer>
+<footer>
+  <span>&copy; 2026 Eliot Winder</span>
+  <!-- WinderForge credit / cross-link. -->
+  <a class="wf-credit" href="https://winderforge.com" target="_blank" rel="noopener" aria-label="Built by WinderForge, opens winderforge.com in a new tab">
+    <span>Built by WinderForge</span>
+  </a>
+  <span>Production Manager &bull; Performing Arts</span>
+</footer>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><div class="lightbox-close">&times;</div><div class="lightbox-content" onclick="event.stopPropagation()"><img id="lbImg" src="" alt=""><div class="lightbox-caption"><div class="lt" id="lbTitle"></div><div class="ls" id="lbSub"></div></div></div></div>
 

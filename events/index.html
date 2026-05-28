@@ -691,6 +691,18 @@ footer span {
   color: var(--gray-dim);
   letter-spacing: 0.1em;
 }
+/* WinderForge credit / cross-link. */
+.wf-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.wf-credit:hover { color: #C4922D; }
 
 /* ─── LIGHTBOX ─── */
 .lightbox {
@@ -1240,6 +1252,10 @@ footer span {
 <!-- FOOTER -->
 <footer>
   <span>&copy; 2026 Eliot Winder. All rights reserved.</span>
+  <!-- WinderForge credit / cross-link. -->
+  <a class="wf-credit" href="https://winderforge.com" target="_blank" rel="noopener" aria-label="Built by WinderForge, opens winderforge.com in a new tab">
+    <span>Built by WinderForge</span>
+  </a>
   <span>Omni Style Event Producer &bull; Santa Barbara, CA</span>
 </footer>
 

@@ -53,10 +53,13 @@ body{font-family:'Source Sans 3','Helvetica Neue',sans-serif;-webkit-font-smooth
 .panel-left .panel-btn:hover{background:#d4a24e;border-color:#d4a24e;color:#0a0a0a}
 .panel-right .panel-btn:hover{background:white;border-color:white;color:#1a2744}
 
-/* FOOTER — also split so divider falls between words */
-.landing-footer{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0.8rem;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 100%);pointer-events:none}
-.footer-l{font-size:0.58rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;width:50%;text-align:right;padding-right:0.5em}
-.footer-r{font-size:0.58rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;width:50%;text-align:left;padding-left:0.5em}
+/* FOOTER — single centered row with WinderForge credit inline */
+.landing-footer{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:0 0.6em;padding:0.8rem;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 100%);pointer-events:none}
+.footer-l,.footer-r,.footer-sep{font-size:0.58rem;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase}
+.footer-sep{opacity:0.7}
+/* WinderForge credit / cross-link. */
+.wf-credit{display:inline-flex;align-items:center;gap:0.45em;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;pointer-events:auto;transition:color 0.3s}
+.wf-credit:hover{color:#C4922D}
 
 /* RESPONSIVE */
 @media(max-width:1024px){.panel-content{padding:0 2rem 3rem}.panel-title{font-size:clamp(1.4rem,2.5vw,2rem)}}
@@ -75,6 +78,15 @@ body{font-family:'Source Sans 3','Helvetica Neue',sans-serif;-webkit-font-smooth
 <div class="divider"></div>
 <a href="performing-arts/" class="panel panel-right"><div class="panel-bg"></div><div class="panel-content"><div class="panel-label">Institutional Portfolio</div><div class="panel-title">Performing Arts & <em>Institutional Events</em></div><div class="panel-desc">Classical concerts, ballet, lectures, and world-class cultural programming at UCSB Arts & Lectures and Santa Barbara's premier venues.</div><span class="panel-btn">View Portfolio</span></div></a>
 </div>
-<div class="landing-footer"><span class="footer-l">&copy; 2026</span><span class="footer-r">Eliot Winder</span></div>
+<div class="landing-footer">
+  <span class="footer-l">&copy; 2026</span>
+  <span class="footer-sep" aria-hidden="true">&middot;</span>
+  <span class="footer-r">Eliot Winder</span>
+  <span class="footer-sep" aria-hidden="true">&middot;</span>
+  <!-- WinderForge credit / cross-link. -->
+  <a class="wf-credit" href="https://winderforge.com" target="_blank" rel="noopener" aria-label="Built by WinderForge, opens winderforge.com in a new tab">
+    <span>Built by WinderForge</span>
+  </a>
+</div>
 </body>
 </html>
